@@ -45,6 +45,7 @@
 \newcommand{\sfx}[1]{{\color{suffixred}#1}}
 
 \newcolumntype{C}{>{\centering\arraybackslash}X}
+\renewcommand{\labelitemi}{$\bullet$}
 
 % ─── Arabic words ───────────────────────────────────────────
 % Each word is wrapped in \textarabic{} so the whole word is ONE
@@ -119,168 +120,10 @@
   \item ইসমে মুসতাক
 \end{itemize}
 
-\newpage
-
-% ─── Fil Madi Table ─────────────────────────────────────────
-\begin{center}
-  {\arabicfont \color{titlegreen} \textbf{\textarabic{تصريف فِعل الماضي}}}
-\end{center}
-
-\vspace{0.3cm}
-
-\begin{center}
-  {\arabicfont
-    \textarabic{%
-      \textbf{\color{titlegreen}علامة:}
-      \enspace
-      الجذر \textbf{\myroot{فَعَلَ}}
-      \enspace|\enspace
-      الضمير (علامة) \textbf{\color{suffixred}بالأحمر}%
-    }
-  }
-\end{center}
-
-\vspace{0.4cm}
-
-\setlength{\arrayrulewidth}{0.5pt}
-\setlength{\tabcolsep}{3pt}
-\renewcommand{\arraystretch}{2.2}
-
-\begin{tabularx}{\textwidth}{|C|C|C|}
-
-  \hline
-  \rowcolor{headergreen}
-  {\arabicfont \color{white} \textbf{مُتَكَلِّم}} &
-  {\arabicfont \color{white} \textbf{حَاضِر}}     &
-  {\arabicfont \color{white} \textbf{غَائِب}}     \\
-  \hline
-
-  \rowcolor{lightgreen}
-  {\arabicfont \faltu}   &
-  {\arabicfont \falta}   &
-  {\arabicfont \fala}    \\
-  \hline
-
-  {\arabicfont \falnaa}     &
-  {\arabicfont \faltumaa}   &
-  {\arabicfont \falaa}      \\
-  \hline
-
-  \rowcolor{lightgreen}
-  &
-  {\arabicfont \faltum}  &
-  {\arabicfont \faluu}   \\
-  \hline
-
-  &
-  {\arabicfont \falti}   &
-  {\arabicfont \falat}   \\
-  \hline
-
-  \rowcolor{lightgreen}
-  &
-  {\arabicfont \faltumaaf} &
-  {\arabicfont \falataa}   \\
-  \hline
-
-  &
-  {\arabicfont \faltunna} &
-  {\arabicfont \falna}    \\
-  \hline
-
-\end{tabularx}
-
-\vspace{0.4cm}
-
-\begin{center}
-  {\arabicfont \color{gray} \small
-    \textarabic{الجذر الأصلي بالأسود \textbullet\ العلامة (الضمير) بالأحمر}
-  }
-\end{center}
-
-% ─── NEW PAGE: Fil Mudare Table ─────────────────────────────
-\newpage
-
-\begin{center}
-  {\arabicfont \color{titlegreen} \textbf{\textarabic{تصريف فِعل المضارع}}}
-\end{center}
-
-\vspace{0.3cm}
-
-\begin{center}
-  {\arabicfont
-    \textarabic{%
-      \textbf{\color{titlegreen}علامة:}
-      \enspace
-      الجذر \textbf{\myroot{فعل}}
-      \enspace|\enspace
-      حرف المضارعة والعلامة \textbf{\color{suffixred}بالأحمر}%
-    }
-  }
-\end{center}
-
-\vspace{0.4cm}
-
-\setlength{\arrayrulewidth}{0.5pt}
-\setlength{\tabcolsep}{3pt}
-\renewcommand{\arraystretch}{2.2}
-
-\begin{tabularx}{\textwidth}{|C|C|C|}
-
-  \hline
-  \rowcolor{headergreen}
-  {\arabicfont \color{white} \textbf{مُتَكَلِّم}} &
-  {\arabicfont \color{white} \textbf{حَاضِر}}     &
-  {\arabicfont \color{white} \textbf{غَائِب}}     \\
-  \hline
-
-  % Row 1 — واحد مذكر
-  \rowcolor{lightgreen}
-  {\arabicfont \mudraf{أَ}}            &
-  {\arabicfont \mudraf{تَ}}            &
-  {\arabicfont \mudraf{يَ}}            \\
-  \hline
-
-  % Row 2 — تثنية مذكر / جمع متكلم
-  {\arabicfont \mudraf{نَ}}            &
-  {\arabicfont \mud{تَ}{فْعَلَ}{انِ}}  &
-  {\arabicfont \mud{يَ}{فْعَلَ}{انِ}}  \\
-  \hline
-
-  % Row 3 — جمع مذكر
-  \rowcolor{lightgreen}
-  &
-  {\arabicfont \mud{تَ}{فْعَلُ}{ونَ}}  &
-  {\arabicfont \mud{يَ}{فْعَلُ}{ونَ}}  \\
-  \hline
-
-  % Row 4 — واحد مؤنث
-  &
-  {\arabicfont \mud{تَ}{فْعَلِ}{ينَ}}  &
-  {\arabicfont \mudraf{تَ}}            \\
-  \hline
-
-  % Row 5 — تثنية مؤنث
-  \rowcolor{lightgreen}
-  &
-  {\arabicfont \mud{تَ}{فْعَلَ}{انِ}}  &
-  {\arabicfont \mud{تَ}{فْعَلَ}{انِ}}  \\
-  \hline
-
-  % Row 6 — جمع مؤنث
-  &
-  {\arabicfont \mud{تَ}{فْعَلْ}{نَ}}   &
-  {\arabicfont \mud{يَ}{فْعَلْ}{نَ}}   \\
-  \hline
-
-\end{tabularx}
-
-\vspace{0.4cm}
-
-\begin{center}
-  {\arabicfont \color{gray} \small
-    \textarabic{حرف المضارعة (يَ تَ أَ نَ) والعلامة بالأحمر \textbullet\ الجذر بالأسود}
-  }
-\end{center}
+\input{chapters/madi}
+\input{chapters/mudare}
+\input{chapters/amr}
+\input{chapters/nahi}
+\input{chapters/ism-e-mustak}
 
 \end{document}
