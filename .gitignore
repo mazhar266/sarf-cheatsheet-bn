@@ -1,0 +1,74 @@
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.directory
+
+# Windows
+desktop.ini
+*.lnk
+
+# Linux
+.nfs*
+
+# LaTeX project files
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+*.lof
+*.lot
+*.idx
+*.ind
+*.ilg
+*.pdf
+build/
+dist/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-workspace
+*.sublime-project
+.eclipse
+.project
+.pydevproject
+*.code-workspace
+.vim
+.emacs.desktop
+.emacs.desktop.lock
+
+# Common editor files
+*~
+*.tmp
+*.bak
+*.swp
+
+# macOS
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Node modules (if used in project)
+node_modules/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+env/
+venv/
