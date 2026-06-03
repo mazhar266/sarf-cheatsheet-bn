@@ -1,0 +1,72 @@
+name: Build and Release PDF
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build PDF
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install LaTeX dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            texlive-xetex \
+            texlive-latex-extra \
+            texlive-lang-arabic \
+            texlive-lang-other
+
+      - name: Build PDF
+        run: bash build.sh
+
+      - name: Prepare release asset
+        run: cp dist/main.pdf dist/sarf-cheatsheet-bn.pdf
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: sarf-cheatsheet-bn
+          path: dist/sarf-cheatsheet-bn.pdf
+          if-no-files-found: error
+
+  release:
+    name: Create GitHub Release
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download PDF artifact
+        uses: actions/download-artifact@v7
+        with:
+          name: sarf-cheatsheet-bn
+          path: release
+
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" \
+            release/sarf-cheatsheet-bn.pdf \
+            --title "Sarf Cheatsheet BN ${GITHUB_REF_NAME}" \
+            --generate-notes \
+            --verify-tag

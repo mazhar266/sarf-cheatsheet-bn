@@ -59,6 +59,40 @@ dist/main.pdf
 
 Generated LaTeX files and PDFs are ignored by Git through `.gitignore`.
 
+## GitHub Actions
+
+The repository includes a GitHub Actions workflow at:
+
+```text
+.github/workflows/build-and-release.yml
+```
+
+The workflow runs on:
+
+- pushes to `main`
+- pull requests targeting `main`
+- version tags matching `v*`
+- manual runs from the GitHub Actions tab
+
+Every successful workflow run builds the PDF and uploads it as a workflow artifact named `sarf-cheatsheet-bn`.
+
+## Release Pipeline
+
+To create a release, push a version tag:
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+When GitHub Actions sees a `v*` tag, it builds the PDF and creates a GitHub Release with this asset attached:
+
+```text
+sarf-cheatsheet-bn.pdf
+```
+
+The release job uses GitHub's built-in `GITHUB_TOKEN` with `contents: write` permission only for the release job.
+
 ## Editing
 
 To add or update content, edit the relevant chapter file:
