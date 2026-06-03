@@ -32,6 +32,12 @@ jobs:
             texlive-lang-arabic \
             texlive-lang-other
 
+      - name: Verify bundled fonts
+        run: |
+          test -f static/fonts/SolaimanLipi_20-04-07.ttf
+          test -f static/fonts/Scheherazade_New/ScheherazadeNew-Regular.ttf
+          test -f static/fonts/Scheherazade_New/ScheherazadeNew-Bold.ttf
+
       - name: Build PDF
         run: bash build.sh
 
