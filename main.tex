@@ -1,0 +1,286 @@
+%!TEX program = xelatex
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+% ─── Packages ───────────────────────────────────────────────
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{geometry}
+\usepackage{tabularx}
+\usepackage{amssymb}
+
+% ─── Page geometry ──────────────────────────────────────────
+\geometry{
+  a5paper,
+  margin=1cm
+}
+
+% ─── Language & Font setup ──────────────────────────────────
+\setmainlanguage{bengali}
+\setotherlanguage{arabic}
+
+\newfontfamily\bengalifont[
+  Script=Bengali,
+  BoldFont=SolaimanLipi
+]{SolaimanLipi}
+
+\newfontfamily\arabicfont[
+  Script=Arabic,
+  Scale=1.6,
+  WordSpace=1.5
+]{Scheherazade New}
+
+% ─── Colors ─────────────────────────────────────────────────
+\definecolor{headergreen}{HTML}{4CAF50}
+\definecolor{lightgreen}{HTML}{E8F5E9}
+\definecolor{suffixred}{HTML}{CC0000}
+\definecolor{titlegreen}{HTML}{2E7D32}
+
+% ─── Helper commands ────────────────────────────────────────
+\newcommand{\myroot}[1]{{\color{black}#1}}
+\newcommand{\sfx}[1]{{\color{suffixred}#1}}
+
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+% ─── Arabic words ───────────────────────────────────────────
+% Each word is wrapped in \textarabic{} so the whole word is ONE
+% right-to-left unit. Without this, the coloured root and suffix
+% get reordered left-to-right and the red lands on the wrong side.
+%
+% SPECIAL CASE — when the marker (علامة) is a bare diacritic, not an
+% added letter (e.g. the final fatha in فَعَلَ for واحد مذكر غائب):
+% XeLaTeX cannot colour a diacritic differently from its base letter,
+% because changing colour mid-cluster detaches the mark. Instead we
+% OVERLAY: the fully-red word is drawn first (bottom layer, and it sets
+% the box width), then a black copy LACKING the final mark is \llap-ed
+% on top. The black letters hide the red ones; only the red diacritic
+% shows through. Kept inside \mbox so it centres correctly in a cell.
+% Usage: \redmark{full red word}{same word WITHOUT the final mark}
+\newcommand{\redmark}[2]{\mbox{\textarabic{\sfx{#1}}\llap{\textarabic{\myroot{#2}}}}}
+
+% غائب
+\newcommand{\fala}     {\redmark{فَعَلَ}{فَعَل}}
+\newcommand{\falaa}    {\textarabic{\myroot{فَعَلَ}\sfx{ا}}}
+\newcommand{\faluu}    {\textarabic{\myroot{فَعَلُ}\sfx{وا}}}
+\newcommand{\falat}    {\textarabic{\myroot{فَعَلَ}\sfx{تْ}}}
+\newcommand{\falataa}  {\textarabic{\myroot{فَعَلَ}\sfx{تَا}}}
+\newcommand{\falna}    {\textarabic{\myroot{فَعَلْ}\sfx{نَ}}}
+
+% حاضر
+\newcommand{\falta}    {\textarabic{\myroot{فَعَلْ}\sfx{تَ}}}
+\newcommand{\faltumaa} {\textarabic{\myroot{فَعَلْ}\sfx{تُمَا}}}
+\newcommand{\faltum}   {\textarabic{\myroot{فَعَلْ}\sfx{تُمْ}}}
+\newcommand{\falti}    {\textarabic{\myroot{فَعَلْ}\sfx{تِ}}}
+\newcommand{\faltumaaf}{\textarabic{\myroot{فَعَلْ}\sfx{تُمَا}}}
+\newcommand{\faltunna} {\textarabic{\myroot{فَعَلْ}\sfx{تُنَّ}}}
+
+% متكلم
+\newcommand{\faltu}    {\textarabic{\myroot{فَعَلْ}\sfx{تُ}}}
+\newcommand{\falnaa}   {\textarabic{\myroot{فَعَلْ}\sfx{نَا}}}
+
+% ─── المضارع (present/future) ────────────────────────────────
+% In المضارع the markers are PREFIXES (حروف المضارعة: يَ تَ أَ نَ) as
+% well as suffixes. So both ends are red, the root فعل stays black.
+%
+% \mud{prefix}{black stem}{suffix}: a form whose marker suffix is an
+% ADDED LETTER (انِ، ونَ، ينَ، نَ). Straightforward coloured runs.
+\newcommand{\mud}[3]{\textarabic{\sfx{#1}\myroot{#2}\sfx{#3}}}
+%
+% \mudraf{prefix}: a singular form ending in a bare damma (raf'), e.g.
+% يَفْعَلُ. The final damma is the marker but a bare diacritic, so —as
+% with the ماضي fatha— we OVERLAY. Crucially BOTH layers split the
+% prefix the same way, so they shape (and measure) identically and
+% align. Bottom = red prefix + red stem+damma; top = red prefix +
+% black stem (no damma). Black hides red stem; red damma shows.
+\newcommand{\mudraf}[1]{%
+  \mbox{\textarabic{\sfx{#1}\sfx{فْعَلُ}}\llap{\textarabic{\sfx{#1}\myroot{فْعَل}}}}%
+}
+
+% ─── Document info ──────────────────────────────────────────
+\title{সরফ}
+\author{মাজহার আহমেদ}
+\date{জুন ২০২৬}
+
+\begin{document}
+
+\maketitle
+
+\section{ফেল এর প্রকারভেদ}
+
+\begin{itemize}
+  \item মাজি
+  \item মুজারে
+  \item আমর
+  \item নাহি
+  \item ইসমে মুসতাক
+\end{itemize}
+
+\newpage
+
+% ─── Fil Madi Table ─────────────────────────────────────────
+\begin{center}
+  {\arabicfont \color{titlegreen} \textbf{\textarabic{تصريف فِعل الماضي}}}
+\end{center}
+
+\vspace{0.3cm}
+
+\begin{center}
+  {\arabicfont
+    \textarabic{%
+      \textbf{\color{titlegreen}علامة:}
+      \enspace
+      الجذر \textbf{\myroot{فَعَلَ}}
+      \enspace|\enspace
+      الضمير (علامة) \textbf{\color{suffixred}بالأحمر}%
+    }
+  }
+\end{center}
+
+\vspace{0.4cm}
+
+\setlength{\arrayrulewidth}{0.5pt}
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{2.2}
+
+\begin{tabularx}{\textwidth}{|C|C|C|}
+
+  \hline
+  \rowcolor{headergreen}
+  {\arabicfont \color{white} \textbf{مُتَكَلِّم}} &
+  {\arabicfont \color{white} \textbf{حَاضِر}}     &
+  {\arabicfont \color{white} \textbf{غَائِب}}     \\
+  \hline
+
+  \rowcolor{lightgreen}
+  {\arabicfont \faltu}   &
+  {\arabicfont \falta}   &
+  {\arabicfont \fala}    \\
+  \hline
+
+  {\arabicfont \falnaa}     &
+  {\arabicfont \faltumaa}   &
+  {\arabicfont \falaa}      \\
+  \hline
+
+  \rowcolor{lightgreen}
+  &
+  {\arabicfont \faltum}  &
+  {\arabicfont \faluu}   \\
+  \hline
+
+  &
+  {\arabicfont \falti}   &
+  {\arabicfont \falat}   \\
+  \hline
+
+  \rowcolor{lightgreen}
+  &
+  {\arabicfont \faltumaaf} &
+  {\arabicfont \falataa}   \\
+  \hline
+
+  &
+  {\arabicfont \faltunna} &
+  {\arabicfont \falna}    \\
+  \hline
+
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\begin{center}
+  {\arabicfont \color{gray} \small
+    \textarabic{الجذر الأصلي بالأسود \textbullet\ العلامة (الضمير) بالأحمر}
+  }
+\end{center}
+
+% ─── NEW PAGE: Fil Mudare Table ─────────────────────────────
+\newpage
+
+\begin{center}
+  {\arabicfont \color{titlegreen} \textbf{\textarabic{تصريف فِعل المضارع}}}
+\end{center}
+
+\vspace{0.3cm}
+
+\begin{center}
+  {\arabicfont
+    \textarabic{%
+      \textbf{\color{titlegreen}علامة:}
+      \enspace
+      الجذر \textbf{\myroot{فعل}}
+      \enspace|\enspace
+      حرف المضارعة والعلامة \textbf{\color{suffixred}بالأحمر}%
+    }
+  }
+\end{center}
+
+\vspace{0.4cm}
+
+\setlength{\arrayrulewidth}{0.5pt}
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{2.2}
+
+\begin{tabularx}{\textwidth}{|C|C|C|}
+
+  \hline
+  \rowcolor{headergreen}
+  {\arabicfont \color{white} \textbf{مُتَكَلِّم}} &
+  {\arabicfont \color{white} \textbf{حَاضِر}}     &
+  {\arabicfont \color{white} \textbf{غَائِب}}     \\
+  \hline
+
+  % Row 1 — واحد مذكر
+  \rowcolor{lightgreen}
+  {\arabicfont \mudraf{أَ}}            &
+  {\arabicfont \mudraf{تَ}}            &
+  {\arabicfont \mudraf{يَ}}            \\
+  \hline
+
+  % Row 2 — تثنية مذكر / جمع متكلم
+  {\arabicfont \mudraf{نَ}}            &
+  {\arabicfont \mud{تَ}{فْعَلَ}{انِ}}  &
+  {\arabicfont \mud{يَ}{فْعَلَ}{انِ}}  \\
+  \hline
+
+  % Row 3 — جمع مذكر
+  \rowcolor{lightgreen}
+  &
+  {\arabicfont \mud{تَ}{فْعَلُ}{ونَ}}  &
+  {\arabicfont \mud{يَ}{فْعَلُ}{ونَ}}  \\
+  \hline
+
+  % Row 4 — واحد مؤنث
+  &
+  {\arabicfont \mud{تَ}{فْعَلِ}{ينَ}}  &
+  {\arabicfont \mudraf{تَ}}            \\
+  \hline
+
+  % Row 5 — تثنية مؤنث
+  \rowcolor{lightgreen}
+  &
+  {\arabicfont \mud{تَ}{فْعَلَ}{انِ}}  &
+  {\arabicfont \mud{تَ}{فْعَلَ}{انِ}}  \\
+  \hline
+
+  % Row 6 — جمع مؤنث
+  &
+  {\arabicfont \mud{تَ}{فْعَلْ}{نَ}}   &
+  {\arabicfont \mud{يَ}{فْعَلْ}{نَ}}   \\
+  \hline
+
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\begin{center}
+  {\arabicfont \color{gray} \small
+    \textarabic{حرف المضارعة (يَ تَ أَ نَ) والعلامة بالأحمر \textbullet\ الجذر بالأسود}
+  }
+\end{center}
+
+\end{document}
