@@ -116,3 +116,11 @@ Do not include `\begin{document}` or `\end{document}` inside chapter files. Thos
 ## License
 
 See `LICENSE.md`.
+
+## Useful Links
+
+- [Shamela.ws](https://shamela.org/)
+- [Tex Studio](https://www.texstudio.org/)
+- [LaTeX Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop)
+- [MikTeX](https://miktex.org/)
+- [LaTeX](https://www.latex-project.org/get/)
