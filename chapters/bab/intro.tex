@@ -1,0 +1,96 @@
+\newpage
+
+\begin{center}
+  {\large\bfseries\color{suffixred}\underline{এক নজরে মুনশাইবের বাবসমূহ}}
+
+  \vspace{0.15cm}
+
+  {\arabicfont\normalsize\bfseries\underline{\textarabic{ثلاثة وأربعون بابا للمنشعب في لمحة}}}
+
+  \vspace{0.05cm}
+
+  {\arabicfont\small\bfseries\textarabic{(فقط للحفظ)}}
+\end{center}
+
+\vspace{-0.05cm}
+
+\begin{center}
+\resizebox{0.94\textwidth}{!}{%
+\begin{tikzpicture}[
+  every node/.style={inner sep=1pt, outer sep=0pt},
+  flow/.style={-{Stealth[length=5pt,width=5pt]}, line width=0.5pt},
+  branch/.style={line width=0.5pt},
+  arlabel/.style={font=\arabicfont\small, align=center},
+  redlabel/.style={font=\arabicfont\normalsize\bfseries, text=suffixred, align=center},
+  list/.style={font=\arabicfont\scriptsize, align=right}
+]
+
+\node[redlabel] at (0,0) {\textarabic{أَفْعَالُ الْمُتَصَرِّفَةِ}};
+
+\draw[branch] (0,-0.35) -- (0,-0.8) -- (-5.7,-0.8);
+\draw[flow] (-5.7,-0.8) -- (-5.7,-1.25);
+\draw[branch] (0,-0.8) -- (5.7,-0.8);
+\draw[flow] (5.7,-0.8) -- (5.7,-1.25);
+
+\node[arlabel] at (-5.7,-1.6) {\textarabic{رباعي}};
+\node[arlabel] at (5.7,-1.6) {\textarabic{ثلاثي}};
+
+\draw[branch] (5.7,-2.0) -- (5.7,-2.65) -- (1.0,-2.65);
+\draw[flow] (1.0,-2.65) -- (1.0,-3.1);
+\draw[branch] (5.7,-2.65) -- (10.4,-2.65);
+\draw[flow] (10.4,-2.65) -- (10.4,-3.1);
+
+\node[arlabel] at (1.0,-3.45) {\textarabic{ثلاثي مزيد فيه}};
+\node[arlabel] at (10.4,-3.45) {\textarabic{ثلاثي مجرد (٨)}};
+
+\draw[branch] (1.0,-3.85) -- (1.0,-4.35) -- (-2.2,-4.35);
+\draw[flow] (-2.2,-4.35) -- (-2.2,-4.75);
+\draw[branch] (1.0,-4.35) -- (4.2,-4.35);
+\draw[flow] (4.2,-4.35) -- (4.2,-4.75);
+
+\node[arlabel] at (-2.2,-5.1) {\textarabic{غير ملحق برباعي}};
+\node[arlabel] at (4.2,-5.1) {\textarabic{ملحق برباعي}};
+
+\draw[branch] (10.4,-3.85) -- (10.4,-4.35) -- (7.5,-4.35);
+\draw[flow] (7.5,-4.35) -- (7.5,-4.75);
+\draw[branch] (10.4,-4.35) -- (13.3,-4.35);
+\draw[flow] (13.3,-4.35) -- (13.3,-4.75);
+
+\node[arlabel] at (7.5,-5.1) {\textarabic{شاذ (٣)}};
+\node[arlabel] at (13.3,-5.1) {\textarabic{مطرد (٥)}};
+
+\node[list, anchor=north east] at (8.65,-5.55) {%
+  \textarabic{١. حَسِبَ يَحْسِبُ}\\
+  \textarabic{٢. فَضِلَ يَفْضُلُ}\\
+  \textarabic{٣. كَادَ يَكَادُ}%
+};
+
+\node[list, anchor=north east] at (15.5,-5.55) {%
+  \textarabic{١. نَصَرَ يَنْصُرُ}\\
+  \textarabic{٢. ضَرَبَ يَضْرِبُ}\\
+  \textarabic{٣. سَمِعَ يَسْمَعُ}\\
+  \textarabic{٤. فَتَحَ يَفْتَحُ}\\
+  \textarabic{٥. كَرُمَ يَكْرُمُ (لازم)}%
+};
+
+\draw[branch] (-2.2,-5.5) -- (-2.2,-9.95);
+\draw[branch] (-2.2,-9.95) -- (10.8,-9.95);
+\draw[flow] (-2.2,-9.95) -- (-2.2,-10.4);
+\draw[flow] (10.8,-9.95) -- (10.8,-10.4);
+
+\node[redlabel] at (-2.2,-10.8) {\textarabic{بے همزه وصل (٥)}};
+\node[redlabel] at (10.8,-10.8) {\textarabic{باهمزه وصل (٩)}};
+
+\node[list, anchor=north east] at (1.6,-11.25) {%
+  \textarabic{١. إفعال: أَكْرَمَ يُكْرِمُ}\\
+  \textarabic{٢. تفعيل: صَرَّفَ يُصَرِّفُ}%
+};
+
+\node[list, anchor=north east] at (14.6,-11.25) {%
+  \textarabic{١. إفتعال: اجْتَنَبَ يَجْتَنِبُ}\\
+  \textarabic{٢. إستفعال: اسْتَنْصَرَ يَسْتَنْصِرُ}%
+};
+
+\end{tikzpicture}%
+}
+\end{center}
