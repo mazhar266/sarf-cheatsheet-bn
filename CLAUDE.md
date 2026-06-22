@@ -23,7 +23,7 @@ bash build.sh          # → dist/main.pdf
 
 Inclusion is explicit and ordered via `\input` in `main.tex`:
 - Top-level chapters (`madi`, `mudare`, `amr`, `nahi`, `ism-e-mustak`) are `\input` directly from `main.tex`.
-- The *abwāb* (أبواب — verb paradigm families) live in `chapters/bab/`. `main.tex` inputs `chapters/bab/index`, and `chapters/bab/index.tex` in turn inputs each bab (`nasara-yansuru`, `tafeel`, `tafauul`).
+- The *abwāb* (أبواب — verb paradigm families) live in `chapters/bab/`. `main.tex` inputs `chapters/bab/index`, and `chapters/bab/index.tex` in turn inputs each bab (`nasara-yansuru`, `tafeel`, `tafaul`).
 
 To **add a chapter**: create `chapters/foo.tex`, then add `\input{chapters/foo}` to `main.tex` at the desired position.
 To **add a bab**: create `chapters/bab/foo.tex`, then add `\input{chapters/bab/foo}` to `chapters/bab/index.tex`.
