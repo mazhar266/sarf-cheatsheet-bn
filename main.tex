@@ -134,6 +134,15 @@
 % \tafmasdar{<word without the leading التَّ>}
 \newcommand{\tafmasdar}[1]{\textarabic{\aug{التَّ}\myroot{#1}}}
 
+% ─── باب التفعيل (Form II) مصدر ───────────────────────────────
+% The masdar pattern is التَّفْعِيل. Two augments are grey: the leading
+% التَّ (article + prefixed ت) and the long ي of the تفعيل pattern. The
+% three root letters stay black (sukūn on F1, kasra on F2, case vowel
+% on F3). Pass the three bare root consonants: \tafeelmasdar{F1}{F2}{F3}
+\newcommand{\tafeelmasdar}[3]{%
+  \textarabic{\aug{التَّ}\myroot{#1ْ#2ِ}\aug{ي}\myroot{#3ُ}}%
+}
+
 % ─── Document info ──────────────────────────────────────────
 \title{সরফ}
 \author{মাজহার আহমেদ}
