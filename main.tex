@@ -50,10 +50,15 @@
 \definecolor{lightgreen}{HTML}{E8F5E9}
 \definecolor{suffixred}{HTML}{CC0000}
 \definecolor{titlegreen}{HTML}{2E7D32}
+\definecolor{augmentgray}{HTML}{999999}
 
 % ─── Helper commands ────────────────────────────────────────
 \newcommand{\myroot}[1]{{\color{black}#1}}
 \newcommand{\sfx}[1]{{\color{suffixred}#1}}
+% \aug: an AUGMENT letter (زائدة) — a non-root letter added by the bab
+% pattern. Greyed so the black root letters stand out. Same coloured-run
+% approach as \sfx, just grey; used inside a single \textarabic{}.
+\newcommand{\aug}[1]{{\color{augmentgray}#1}}
 
 \newcolumntype{C}{>{\centering\arraybackslash}X}
 \renewcommand{\labelitemi}{$\bullet$}
@@ -111,6 +116,23 @@
 \newcommand{\mudraf}[1]{%
   \mbox{\textarabic{\sfx{#1}\sfx{فْعَلُ}}\llap{\textarabic{\sfx{#1}\myroot{فْعَل}}}}%
 }
+
+% ─── باب الافتعال (Form VIII) مصدر ───────────────────────────
+% The masdar pattern is الِافْتِعَال. The AUGMENT letters are grey: the
+% article+hamzat-waṣl الِا, the infixed تِ, and the long ا. The three
+% root letters stay black with their pattern vowels (sukūn, fatḥa, ḍamma).
+% Pass the three bare root consonants: \iftmasdar{F1}{F2}{F3}
+\newcommand{\iftmasdar}[3]{%
+  \textarabic{\aug{الِا}\myroot{#1ْ}\aug{تِ}\myroot{#2َ}\aug{ا}\myroot{#3ُ}}%
+}
+
+% ─── باب التفعّل (Form V) مصدر ────────────────────────────────
+% The masdar pattern is التَّفَعُّل. The leading augment التَّ (article ال
+% + the prefixed ت, doubled by sun-letter assimilation of the lām) is
+% grey; the rest of the word (the root letters with their pattern vowels
+% and the doubling shadda) stays black. Pass the black remainder.
+% \tafmasdar{<word without the leading التَّ>}
+\newcommand{\tafmasdar}[1]{\textarabic{\aug{التَّ}\myroot{#1}}}
 
 % ─── Document info ──────────────────────────────────────────
 \title{সরফ}
