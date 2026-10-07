@@ -28,17 +28,20 @@ Inclusion is explicit and ordered via `\input` in `main.tex`:
 To **add a chapter**: create `chapters/foo.tex`, then add `\input{chapters/foo}` to `main.tex` at the desired position.
 To **add a bab**: create `chapters/bab/foo.tex`, then add `\input{chapters/bab/foo}` to `chapters/bab/index.tex`.
 
-Several files are intentional stubs right now (`amr`, `nahi`, `ism-e-mustak`, and all three babs contain only a `\section` and a placeholder comment). `madi.tex` and `mudare.tex` are the worked examples to copy from.
+`ism-e-mustak` (اسم مشتق) is input *after* the babs, as the last chapter, because its مزيد فيه tip builds on them. Some files are still intentional stubs (`amr`, `nahi`, `bab/nasara-yansuru` contain only a `\section` and a placeholder comment). `madi.tex` and `mudare.tex` are the worked examples to copy from.
 
 ## The root/marker coloring system (most important to understand)
 
-The pedagogical core of the document: in every conjugation the **root letters (الجذر, فعل) are black** and the **pronoun marker (العلامة/الضمير) is red**, so a learner can see what the root is and what each form adds. All the machinery for this lives in the preamble of `main.tex` (`\myroot`, `\sfx`, `\redmark`, `\mud`, `\mudraf`, and the `\fala…` word macros). Read those comments before editing any table — the approach is non-obvious because of two LaTeX/Arabic constraints:
+The pedagogical core of the document: in every conjugation the **root letters (الجذر, فعل) are black** and the **pronoun marker (العلامة/الضمير) is red**, so a learner can see what the root is and what each form adds. All the machinery for this lives in the preamble of `main.tex` (`\myroot`, `\sfx`, `\redmark`, `\mud`, `\mudraf`, and the `\fala…` word macros). Read those comments before editing any table — the approach is non-obvious because of three LaTeX/Arabic constraints:
 
 1. **RTL reordering.** Arabic is right-to-left, so a whole word must be wrapped in a single `\textarabic{...}` so it is ONE rtl unit. If you color the root and suffix in separate `\textarabic` calls, they get reordered left-to-right and the red lands on the wrong side. Inside one `\textarabic`, use `\myroot{...}` (black) and `\sfx{...}` (red) runs.
 
 2. **Bare-diacritic markers can't be colored directly.** When the marker is an *added letter* (e.g. ـوا, ـتم, ـانِ), simple colored runs work. But when the marker is a *bare diacritic* on the last root letter (the final fatḥa of فَعَلَ, the final ḍamma/rafʿ of يَفْعَلُ), XeLaTeX cannot color the mark separately from its base letter — changing color mid-cluster detaches the mark. The workaround is an **overlay**: draw the fully-red word first (it sets the box width), then `\llap` a black copy of the same word *with the final mark removed* on top. The black letters hide the red ones; only the red diacritic shows through.
    - `\redmark{<full red word>}{<same word without the final mark>}` — used for ماضي bare-fatḥa forms (e.g. `\fala`).
    - `\mudraf{<prefix>}` — the مضارع analogue for singular forms ending in a bare ḍamma (يَفْعَلُ). Both overlay layers split the prefix identically so they shape and measure the same.
+   - `\ovl{<spec>}` — general form, used for the اسم مشتق গঠন words (`\gnaasir`, `\gmansuur`, …). The spec is written once with `\rt{…}` (root run, black), `\ad{…}` (added-letter run, grey) and `\nh{<mark>}` (a new or changed haraka, red). `\ovl` renders it twice: a red bottom layer with all marks, and a black/grey top layer without the `\nh` marks. Because both layers come from one spec, their colour runs split identically. Writing the layers separately (like `\redmark`) misaligns them when a run edge falls on a kerned pair such as ر ى.
+
+3. **Colour changes break cursive joining.** Each colour change splits the word into separate shaping runs, so letters on either side render unjoined (فَ ا عِلٌ). Put a zero-width joiner on both sides of the boundary to fix it: `\zwj` is the bare joiner, and `\zj{<letter>}` emits one only if that letter can join forward. Use `\zj` after a root letter passed as an argument, because ا د ذ ر ز و never join forward and a joiner there draws a false connection. The اسم مشتق macros (`\ismfail`, `\ismmaful`, …, `\mazid`) do this. The older مصدر macros (`\iftmasdar`, `\tafmasdar`, `\tafeelmasdar`) don't yet.
 
 For مضارع, markers appear at BOTH ends (the حروف المضارعة prefixes يَ تَ أَ نَ *and* the suffixes), so use `\mud{<red prefix>}{<black stem>}{<red suffix>}` for added-letter suffixes and `\mudraf{<prefix>}` for bare-ḍamma endings.
 

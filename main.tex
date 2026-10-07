@@ -60,6 +60,21 @@
 % approach as \sfx, just grey; used inside a single \textarabic{}.
 \newcommand{\aug}[1]{{\color{augmentgray}#1}}
 
+% A colour change splits the word into separate shaping runs, so the
+% letters either side of it stop joining (فَ ا عِلٌ). A ZERO WIDTH JOINER
+% (U+200D) at the end of one run and the start of the next restores the
+% cursive join. \zwj is the bare joiner; \zj{<letter>} is a joiner only
+% if <letter> can join to the next one, so it is safe after a root
+% letter passed as an argument (ا د ذ ر ز و … never join forward).
+\newcommand{\zwj}{^^^^200d}
+\newcommand{\nonjoiners}{اأإآدذرزوؤءة}
+\makeatletter
+\newcommand{\zj}[1]{%
+  \edef\@tempa{\noexpand\in@{#1}{\nonjoiners}}\@tempa
+  \ifin@\else\zwj\fi
+}
+\makeatother
+
 \newcolumntype{C}{>{\centering\arraybackslash}X}
 \renewcommand{\labelitemi}{$\bullet$}
 
@@ -77,6 +92,7 @@
 % on top. The black letters hide the red ones; only the red diacritic
 % shows through. Kept inside \mbox so it centres correctly in a cell.
 % Usage: \redmark{full red word}{same word WITHOUT the final mark}
+% (\ovl, further down, generalises this to several marks and colours.)
 \newcommand{\redmark}[2]{\mbox{\textarabic{\sfx{#1}}\llap{\textarabic{\myroot{#2}}}}}
 
 % غائب
@@ -143,6 +159,70 @@
   \textarabic{\aug{التَّ}\myroot{#1ْ#2ِ}\aug{ي}\myroot{#3ُ}}%
 }
 
+% ─── اسم مشتق (derived nouns) ─────────────────────────────────
+% Same scheme as the مصدر helpers: the three root letters stay black,
+% the pattern's AUGMENT letters are grey, joined across each colour
+% change with \zwj / \zj. Pass the three bare root consonants; with
+% ف ع ل they print the وزن itself, e.g.
+% \ismfail{ف}{ع}{ل} → فَاعِلٌ, \ismfail{ن}{ص}{ر} → نَاصِرٌ.
+\newcommand{\ismfail}[3]{%   فَاعِلٌ
+  \textarabic{\myroot{#1َ\zj{#1}}\aug{\zj{#1}ا}\myroot{#2ِ#3ٌ}}}
+\newcommand{\ismmaful}[3]{%  مَفْعُولٌ
+  \textarabic{\aug{مَ\zwj}\myroot{\zwj#1ْ#2ُ\zj{#2}}\aug{\zj{#2}و}\myroot{#3ٌ}}}
+\newcommand{\ismzarf}[3]{%   مَفْعَلٌ
+  \textarabic{\aug{مَ\zwj}\myroot{\zwj#1ْ#2َ#3ٌ}}}
+\newcommand{\ismzarfi}[3]{%  مَفْعِلٌ
+  \textarabic{\aug{مَ\zwj}\myroot{\zwj#1ْ#2ِ#3ٌ}}}
+% اسم آلة has three types: صغرى مِفْعَلٌ, وسطى مِفْعَلَةٌ, كبرى مِفْعَالٌ
+\newcommand{\ismaalas}[3]{%  مِفْعَلٌ   (صغرى)
+  \textarabic{\aug{مِ\zwj}\myroot{\zwj#1ْ#2َ#3ٌ}}}
+\newcommand{\ismaalaw}[3]{%  مِفْعَلَةٌ  (وسطى)
+  \textarabic{\aug{مِ\zwj}\myroot{\zwj#1ْ#2َ#3َ\zj{#3}}\aug{\zj{#3}ةٌ}}}
+\newcommand{\ismaalak}[3]{%  مِفْعَالٌ  (كبرى)
+  \textarabic{\aug{مِ\zwj}\myroot{\zwj#1ْ#2َ\zj{#2}}\aug{\zj{#2}ا}\myroot{#3ٌ}}}
+\newcommand{\ismtafdil}[3]{% أَفْعَلُ  (أ never joins forward: no joiner)
+  \textarabic{\aug{أَ}\myroot{#1ْ#2َ#3ُ}}}
+%
+% مزيد فيه forms, where the مضارع prefix (red) is swapped for مُ (red):
+% \mazid{<red marker>}{<grey augments>}{<black root remainder>}
+% e.g. \mazid{مُ}{سْتَ}{عْمِلٌ} → مُسْتَعْمِلٌ. Always joins across both
+% colour changes, so the marker and augments must end in a joining
+% letter (مُ يَ تَ نَ سْتَ are fine; أَ is not).
+\newcommand{\mazid}[3]{\textarabic{\sfx{#1\zwj}\aug{\zwj#2\zwj}\myroot{\zwj#3}}}
+
+% ─── اسم مشتق গঠন (construction from the مضارع) ──────────────
+% The source مضارع: its علامة (red) is what gets dropped.
+% \mudsrc{<red علامة>}{<black rest>}, e.g. \mudsrc{يَ}{نْصُرُ}
+\newcommand{\mudsrc}[2]{\textarabic{\sfx{#1\zwj}\myroot{\zwj#2}}}
+%
+% The built word: a NEW or CHANGED haraka is red, a kept one stays with
+% its letter's colour. A bare haraka can't be coloured on its own (see
+% \redmark), so \ovl overlays two copies of ONE spec, written with:
+%   \rt{…} a run of root letters (black)   \ad{…} a run of added letters (grey)
+%   \nh{<mark>} a new/changed haraka — put it inside the run, after its letter
+% Bottom copy: every run red, \nh marks kept. Top copy: runs black/grey,
+% \nh marks dropped, so only they show through red. Both copies come from
+% the same spec, so their colour runs split identically and the glyphs
+% (incl. kerning across run edges, e.g. ر ى) line up exactly.
+\makeatletter
+\newcommand{\ovl}[1]{\mbox{%
+  \textarabic{\let\rt\sfx\let\ad\sfx\let\nh\@firstofone#1}%
+  \llap{\textarabic{\let\rt\myroot\let\ad\aug\let\nh\@gobble#1}}}}
+\makeatother
+\newcommand{\gnaasir}  {\ovl{\rt{ن\nh{َ}\zwj}\ad{\zwj ا}\rt{ص\nh{ِ}ر\nh{ٌ}}}}                 % ← يَنْصُرُ
+\newcommand{\gmansuur} {\ovl{\ad{م\nh{َ}\zwj}\rt{\zwj نْص\nh{ُ}\zwj}\ad{\zwj و}\rt{ر\nh{ٌ}}}}   % ← يُنْصَرُ
+\newcommand{\gmansar}  {\ovl{\ad{م\nh{َ}\zwj}\rt{\zwj نْص\nh{َ}ر\nh{ٌ}}}}                     % ← يَنْصُرُ
+\newcommand{\gmadrib}  {\ovl{\ad{م\nh{َ}\zwj}\rt{\zwj ضْرِب\nh{ٌ}}}}                         % ← يَضْرِبُ
+\newcommand{\gmiftah}  {\ovl{\ad{م\nh{ِ}\zwj}\rt{\zwj فْتَح\nh{ٌ}}}}                         % ← يَفْتَحُ
+% وسطى and كبرى are built from the صغرى مِفْتَحٌ (as the book does), so
+% their red marks are relative to it: مِ's kasra is now kept.
+\newcommand{\gmiftaha} {\ovl{\ad{مِ\zwj}\rt{\zwj فْتَح\nh{َ}\zwj}\ad{\zwj ة\nh{ٌ}}}}          % ← مِفْتَحٌ
+\newcommand{\gmiftaah} {\ovl{\ad{مِ\zwj}\rt{\zwj فْتَ\zwj}\ad{\zwj ا}\rt{حٌ}}}                % ← مِفْتَحٌ
+\newcommand{\gakbar}   {\ovl{\ad{أ\nh{َ}}\rt{كْب\nh{َ}رُ}}}                               % ← يَكْبُرُ
+\newcommand{\gkubraa}  {\ovl{\rt{ك\nh{ُ}ب\nh{ْ}ر\nh{َ}}\ad{ى}}}
+\newcommand{\gmustamil}{\ovl{\ad{م\nh{ُ}سْتَ\zwj}\rt{\zwj عْمِل\nh{ٌ}}}}                     % ← يَسْتَعْمِلُ
+\newcommand{\gmustamal}{\ovl{\ad{م\nh{ُ}سْتَ\zwj}\rt{\zwj عْم\nh{َ}ل\nh{ٌ}}}}
+
 % ─── Document info ──────────────────────────────────────────
 \title{সরফ}
 \author{মাজহার আহমেদ}
@@ -166,7 +246,7 @@
 \input{chapters/mudare}
 \input{chapters/amr}
 \input{chapters/nahi}
-\input{chapters/ism-e-mustak}
 \input{chapters/bab/index}
+\input{chapters/ism-e-mustak}
 
 \end{document}
