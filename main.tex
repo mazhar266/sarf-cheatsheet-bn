@@ -205,9 +205,10 @@
 % the same spec, so their colour runs split identically and the glyphs
 % (incl. kerning across run edges, e.g. ر ى) line up exactly.
 \makeatletter
+% \mk stays red on both layers (a marker letter, not a bare haraka).
 \newcommand{\ovl}[1]{\mbox{%
-  \textarabic{\let\rt\sfx\let\ad\sfx\let\nh\@firstofone#1}%
-  \llap{\textarabic{\let\rt\myroot\let\ad\aug\let\nh\@gobble#1}}}}
+  \textarabic{\let\rt\sfx\let\ad\sfx\let\mk\sfx\let\nh\@firstofone#1}%
+  \llap{\textarabic{\let\rt\myroot\let\ad\aug\let\mk\sfx\let\nh\@gobble#1}}}}
 \makeatother
 \newcommand{\gnaasir}  {\ovl{\rt{ن\nh{َ}\zwj}\ad{\zwj ا}\rt{ص\nh{ِ}ر\nh{ٌ}}}}                 % ← يَنْصُرُ
 \newcommand{\gmansuur} {\ovl{\ad{م\nh{َ}\zwj}\rt{\zwj نْص\nh{ُ}\zwj}\ad{\zwj و}\rt{ر\nh{ٌ}}}}   % ← يُنْصَرُ
@@ -223,6 +224,48 @@
 \newcommand{\gmustamil}{\ovl{\ad{م\nh{ُ}سْتَ\zwj}\rt{\zwj عْمِل\nh{ٌ}}}}                     % ← يَسْتَعْمِلُ
 \newcommand{\gmustamal}{\ovl{\ad{م\nh{ُ}سْتَ\zwj}\rt{\zwj عْم\nh{َ}ل\nh{ٌ}}}}
 
+% ─── ماضي-র ছয় কালের কণা ───────────────────────────────────
+% কণা লাল, ফেল কালো। শেষ হরকতের রং মূল ছকে (\fala)।
+\newcommand{\madqarib}{\textarabic{\sfx{قَدْ }\myroot{فَعَلَ}}}
+\newcommand{\madbaid}{\textarabic{\sfx{كَانَ }\myroot{فَعَلَ}}}
+\newcommand{\madist}{\textarabic{\sfx{كَانَ }\myroot{يَفْعُلُ}}}
+\newcommand{\madiht}{\textarabic{\sfx{لَعَلَّمَا }\myroot{فَعَلَ}}}
+\newcommand{\madtam}{\textarabic{\sfx{لَيْتَمَا }\myroot{فَعَلَ}}}
+
+% মাজহুল: নতুন হরকত লাল। মাজি فُعِلَ, মুজারে يُفْعَلُ।
+\newcommand{\majhulmadi}{\ovl{\rt{ف\nh{ُ}ع\nh{ِ}ل\nh{َ}}}}
+\newcommand{\majhulmud}{\ovl{\mk{يُ\zwj}\rt{\zwj فْعَل\nh{ُ}}}}
+
+% مضارع-এর কণা। শেষ হরকত (নাসব/জযম/রাফ) লাল, কণা ও হরফে মুজারা লাল।
+\newcommand{\mudla}{\ovl{\mk{لَا يَ\zwj}\rt{\zwj فْعَل\nh{ُ}}}}
+\newcommand{\mudlan}{\ovl{\mk{لَنْ يَ\zwj}\rt{\zwj فْعَل\nh{َ}}}}
+\newcommand{\mudlam}{\ovl{\mk{لَمْ يَ\zwj}\rt{\zwj فْعَل\nh{ْ}}}}
+\newcommand{\mudnun}{\ovl{\mk{لَيَ\zwj}\rt{\zwj فْعَل\nh{َ}\zwj}\mk{\zwj نَّ}}}
+
+% ─── الأمر ──────────────────────────────────────────────────
+% হাজির মারুফ, ওজন اِفْعَلْ (আইনে যবর/যের হলে হামযায় যের)।
+% হামযায় ওয়াসল ধূসর, সিগার শেষ লাল।
+\newcommand{\amr}{\ovl{\ad{اِ}\rt{فْعَل\nh{ْ}}}}
+\newcommand{\amraa}{\textarabic{\aug{اِ}\myroot{فْعَلَ}\sfx{ا}}}
+\newcommand{\amruu}{\textarabic{\aug{اِ}\myroot{فْعَلُ}\sfx{وا}}}
+\newcommand{\amrii}{\textarabic{\aug{اِ}\myroot{فْعَلِ\zwj}\sfx{\zwj ي}}}
+\newcommand{\amrna}{\textarabic{\aug{اِ}\myroot{فْعَلْ\zwj}\sfx{\zwj نَ}}}
+% গায়েব-মুতাকাল্লিম: যেরযুক্ত লাম।
+\newcommand{\amrlim}{\ovl{\mk{لِيَ\zwj}\rt{\zwj فْعَل\nh{ْ}}}}
+
+% ─── النهي ──────────────────────────────────────────────────
+\newcommand{\nahi}{\ovl{\mk{لَا تَ\zwj}\rt{\zwj فْعَل\nh{ْ}}}}
+\newcommand{\nahiaa}{\textarabic{\sfx{لَا تَ\zwj}\myroot{\zwj فْعَلَ}\sfx{ا}}}
+\newcommand{\nahiuu}{\textarabic{\sfx{لَا تَ\zwj}\myroot{\zwj فْعَلُ}\sfx{وا}}}
+\newcommand{\nahii}{\textarabic{\sfx{لَا تَ\zwj}\myroot{\zwj فْعَلِ\zwj}\sfx{\zwj ي}}}
+\newcommand{\nahina}{\textarabic{\sfx{لَا تَ\zwj}\myroot{\zwj فْعَلْ\zwj}\sfx{\zwj نَ}}}
+
+% বাবের ফিহরিস্তের এক সারি: রং, নম্বর, আরবি ঘর, চিহ্ন।
+\newcommand{\brow}[4]{%
+  \rowcolor{#1}%
+  #2 & #3 & #4 \\ \hline
+}
+
 % ─── Document info ──────────────────────────────────────────
 \title{সরফ}
 \author{মাজহার আহমেদ}
@@ -231,17 +274,7 @@
 \begin{document}
 
 \input{chapters/cover}
-
-\section{ফেল এর প্রকারভেদ}
-
-\begin{itemize}
-  \item মাজি
-  \item মুজারে
-  \item আমর
-  \item নাহি
-  \item ইসমে মুসতাক
-\end{itemize}
-
+\input{chapters/usul}
 \input{chapters/madi}
 \input{chapters/mudare}
 \input{chapters/amr}
